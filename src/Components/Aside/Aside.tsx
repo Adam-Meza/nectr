@@ -4,12 +4,13 @@ import { Definition } from "../Definition/Definition";
 
 interface AsideProps {
   currentGuess : String
+  answers : String[]
 }
 
-export const Aside : React.FC<AsideProps> = ({currentGuess}) => {
+export const Aside : React.FC<AsideProps> = ({currentGuess, answers}) => {
   return (
     <aside className='aside'>
-    <Scoreboard />
+    <Scoreboard answers = {answers}/>
     <Definition currentGuess = {currentGuess}/>
   </aside>
   )

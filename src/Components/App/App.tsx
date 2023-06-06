@@ -11,8 +11,10 @@ function App() {
   const [letters, setLetters] = useState('')
   const [wordlist, setWords] = useState<String[]>([])
   const [currentGuess, setGuess] = useState<String>('')
+  const [answers, setAnswers] = useState<String[]>([])
 
   const updateCurrentGuess = (letter : String) => {
+    console.log('test')
     setGuess([currentGuess, letter].join(''))
   }
 
@@ -20,10 +22,17 @@ function App() {
     console.log(guess)
     setGuess('')
     if ( wordlist.includes(guess)) { 
-      console.log('test')
+      const newWordList = wordlist.filter(word => word !== guess)
+      setWords(newWordList)
+      setAnswers([...answers, guess])
     } else {
       console.log('nada')
     }
+  }
+
+  const handleSubmit = () => {
+    checkGuess(currentGuess)
+    setGuess('')
   }
 
   const fetchData = async () => {
@@ -60,8 +69,9 @@ function App() {
             letters= {letters}
             wordlist={wordlist}
             center={center}
-            checkGuess={checkGuess}
+            handleSubmit={handleSubmit}
             updateCurrentGuess={updateCurrentGuess}
+            answers = {answers}
             />
           )}
         />

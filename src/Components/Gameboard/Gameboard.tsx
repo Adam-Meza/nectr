@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Boardpiece } from "../Boardpiece/Boardpiece";
 import './/gameboard.css'
 
@@ -7,17 +7,11 @@ interface GameboardProps {
   letters: any
   words: String[]
   currentGuess: String
-  checkGuess : (guess : String ) => void
-  updateCurrentGuess : (letter : String) => void 
+  handleSubmit: () => void;
+  updateCurrentGuess : (letter : String) => void;
 }
 
-export const Gameboard : React.FC<GameboardProps> = ({center, letters, checkGuess, updateCurrentGuess}) => {
-  const [currentGuess, setGuess] = useState<String[]>([])
-
-  const handleSubmit = () => {
-    checkGuess(currentGuess.join())
-    setGuess([])
-  }
+export const Gameboard : React.FC<GameboardProps> = ({handleSubmit, currentGuess, center, letters, updateCurrentGuess}) => {
 
   letters = letters.split('')
   return (

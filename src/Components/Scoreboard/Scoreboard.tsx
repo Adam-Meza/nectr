@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import './/Scoreboard.css'
 
-// interface ScoreboardProps {
-//   props? : any
-// }
+interface ScoreboardProps {
+  answers : String[]
+}
 
-export const Scoreboard  = () => {
+export const Scoreboard : React.FC <ScoreboardProps> = ({answers}) => {
   return (
     <div className='scoreboard'>
-      test
+      {answers}
     </div>
   )
 }
