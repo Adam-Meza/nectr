@@ -6,9 +6,11 @@ interface ScoreboardProps {
 }
 
 export const Scoreboard : React.FC <ScoreboardProps> = ({answers}) => {
+  const correctAnswers = answers.map(answer => <div>{answer}</div>)
+  
   return (
     <div className='scoreboard'>
-      {answers}
+      {correctAnswers}
     </div>
   )
 }

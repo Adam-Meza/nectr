@@ -4,6 +4,7 @@ import { Header } from '../Header/Header';
 import { Main } from '../Main/Main';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Switch, Route } from 'react-router-dom';
+import { fetchDefinition, fetchLetters } from '../../fetches';
 
 function App() {
   const [error, setError] = useState(null)
@@ -19,12 +20,12 @@ function App() {
   }
 
   const checkGuess = (guess : String) => {
-    console.log(guess)
-    setGuess('')
     if ( wordlist.includes(guess)) { 
       const newWordList = wordlist.filter(word => word !== guess)
       setWords(newWordList)
       setAnswers([...answers, guess])
+      // console.log(getDefinition(guess))
+      setGuess('')
     } else {
       console.log('nada')
     }
@@ -37,17 +38,13 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://freebee.fun/cgi-bin/today')
-      if (response.ok) {
-        const json = await response.json()
+      fetchLetters().then((json) => {
         const {letters, wordlist, center} = json
 
         setCenter(center)
         setLetters(letters)
         setWords(wordlist)
-      } else {
-        throw new Error()
-      }
+      })
 
     } catch(error : any) {
       setError(error)
