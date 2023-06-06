@@ -6,14 +6,14 @@ interface GameboardProps {
   center: any
   letters: any
   words: String[]
-  checkGuess : (guess : String ) => boolean
+  checkGuess : (guess : String ) => void
 }
 
 export const Gameboard : React.FC<GameboardProps> = ({center, letters, checkGuess}) => {
   const [currentGuess, setGuess] = useState<String[]>([])
 
   const handleSubmit = () => {
-    checkGuess(currentGuess.join())
+    checkGuess(currentGuess.join(''))
     setGuess([])
   }
 

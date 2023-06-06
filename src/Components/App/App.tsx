@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import { Header } from '../Header/Header';
-import { Gameboard } from '../Gameboard/Gameboard';
+import { Main } from '../Main/Main';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
-import { Scoreboard } from '../Scoreboard/Scoreboard';
-import { Definition } from '../Definition/Definition';
+import { Switch, Route } from 'react-router-dom';
 
 function App() {
   const [error, setError] = useState(null)
@@ -13,7 +12,12 @@ function App() {
   const [wordlist, setWords] = useState<String[]>([])
 
   const checkGuess = (guess : String) => {
-    return wordlist.find(word => guess === word) ? true : false ;
+    console.log(guess)
+    if ( wordlist.includes(guess)) { 
+      console.log('test')
+    } else {
+      console.log('nada')
+    }
   }
 
   const fetchData = async () => {
@@ -42,21 +46,21 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      <main>
-        {error && <ErrorMessage message={error}/>}
+      <Switch>
+        <Route exact path = "/" 
+          render = { () => (
+            <Main 
+            letters= {letters}
+            wordlist={wordlist}
+            center={center}
+            checkGuess={checkGuess}
+            />
+          )}
+        />
+    </Switch>
 
-        { !error && <Gameboard 
-        checkGuess={checkGuess}
-        letters ={letters} 
-        center ={center} 
-        words ={wordlist} />}
-      </main>
-      <aside className='aside'>
-        <Scoreboard />
-        <Definition />
-      </aside>
+
     </div>
-    
   );
 }
 
