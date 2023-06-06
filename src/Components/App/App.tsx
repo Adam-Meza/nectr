@@ -10,9 +10,15 @@ function App() {
   const [center, setCenter] = useState('')
   const [letters, setLetters] = useState('')
   const [wordlist, setWords] = useState<String[]>([])
+  const [currentGuess, setGuess] = useState<String>('')
+
+  const updateCurrentGuess = (letter : String) => {
+    setGuess([currentGuess, letter].join(''))
+  }
 
   const checkGuess = (guess : String) => {
     console.log(guess)
+    setGuess('')
     if ( wordlist.includes(guess)) { 
       console.log('test')
     } else {
@@ -50,10 +56,12 @@ function App() {
         <Route exact path = "/" 
           render = { () => (
             <Main 
+            currentGuess = {currentGuess}
             letters= {letters}
             wordlist={wordlist}
             center={center}
             checkGuess={checkGuess}
+            updateCurrentGuess={updateCurrentGuess}
             />
           )}
         />

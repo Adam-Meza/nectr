@@ -6,22 +6,26 @@ import { Aside } from "../Aside/Aside";
 
 interface MainProps {
   letters : String;
+  currentGuess : String
   center: String;
   wordlist: String[];
   checkGuess:  (guess : String) => void;
+  updateCurrentGuess : (letter : String) => void
 }
 
-export const Main : React.FC<MainProps> = ({checkGuess, letters, center, wordlist}) => {
+export const Main : React.FC<MainProps> = ({checkGuess, currentGuess, letters, center, wordlist, updateCurrentGuess}) => {
   return (
     <>
     <main>
-  <Gameboard 
+  <Gameboard
+    updateCurrentGuess = {updateCurrentGuess}
+    currentGuess={currentGuess}
     checkGuess={checkGuess}
     letters ={letters} 
     center ={center} 
     words ={wordlist} />
   </main>
-  <Aside/>
+  <Aside currentGuess = {currentGuess}/>
   </>
   )
 }

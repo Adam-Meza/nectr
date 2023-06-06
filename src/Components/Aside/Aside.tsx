@@ -2,11 +2,15 @@ import React from "react";
 import { Scoreboard } from "../Scoreboard/Scoreboard";
 import { Definition } from "../Definition/Definition";
 
-export const Aside : React.FC = () => {
+interface AsideProps {
+  currentGuess : String
+}
+
+export const Aside : React.FC<AsideProps> = ({currentGuess}) => {
   return (
     <aside className='aside'>
     <Scoreboard />
-    <Definition />
+    <Definition currentGuess = {currentGuess}/>
   </aside>
   )
 }
