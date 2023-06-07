@@ -13,8 +13,8 @@ interface GameboardProps {
 }
 
 export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLastLetter, handleSubmit, currentGuess, center, letters, updateCurrentGuess}) => {
-  const boardPieces = letters.map((letter : String) => {
-    return <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter ={letter}/>
+  const boardPieces = letters.map((letter : String, index : number) => {
+    return <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter ={letter} key ={index}/>
   })
 
   return (
@@ -27,7 +27,7 @@ export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLa
       </div>
       <div className="piece-container">
         {boardPieces[2]}
-        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {center} />
+        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {center} id='center'/>
         {boardPieces[3]}
       </div>
       <div className="piece-container">

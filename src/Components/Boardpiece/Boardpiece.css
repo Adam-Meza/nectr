@@ -6,3 +6,8 @@
   border-radius: 50%;
   font-size: 30px;
 }
+
+#center {
+  background-color: rgb(93, 128, 129);
+  color: white
+}

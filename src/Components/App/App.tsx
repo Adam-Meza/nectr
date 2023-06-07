@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import './App.css';
 import { Header } from '../Header/Header';
 import { Gameboard } from '../Gameboard/Gameboard';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
@@ -9,6 +8,7 @@ import { cleanDefinitionData, DefinitionProps, cleanGameData } from '../../utili
 import { Favotites } from '../Favorites/Favorites';
 import { Scoreboard } from '../Scoreboard/Scoreboard';
 import { DefinitionCard } from '../DefinitionCard/DefinitionCard';
+import './App.css';
 // import { shuffle } from 'lodash';
 
 function App() {
@@ -36,13 +36,15 @@ function App() {
   }
 
   const checkGuess = (guess : String) => {
-    if ( words.includes(guess)) { 
+    guess = guess.toLowerCase()
+    if ( words.includes(guess.toLowerCase())) { 
       const newWords = words.filter(word => word !== guess)
       setWords(newWords);
       setAnswers([...answers, guess]);
       setGuess('');
       getDefinition(guess);
     } else {
+      // 121234234234234234234234234234234
       // console.log('nada')
       // make this display an error !!!
     }
@@ -56,6 +58,7 @@ function App() {
   const fetchData = async () => {
     try {
       fetchLetters().then((json) => {
+
         const {letters, words, center} = cleanGameData(json)
         setCenter(center)
         setLetters(letters)
@@ -93,7 +96,6 @@ function App() {
               <Gameboard 
               currentGuess = {currentGuess}
               letters= {letters}
-              // wordlist={wordlist}
               center={center}
               handleSubmit={handleSubmit}
               updateCurrentGuess={updateCurrentGuess}

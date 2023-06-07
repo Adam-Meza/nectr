@@ -35,8 +35,8 @@ export interface GameDataFetchProps {
 export const cleanGameData = (data: GameDataFetchProps) => {
   
   return {
-    center: data.center,
-    letters: data.letters.split(''),
+    center: data.center.toUpperCase(),
+    letters: data.letters.toUpperCase().split(''),
     words: data.wordlist,
     amountOfWords: data.words
   }
