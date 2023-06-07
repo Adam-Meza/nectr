@@ -9,7 +9,7 @@ interface MeaningCardProps {
 export const MeaningCard : React.FC<MeaningCardProps> = ({partOfSpeech, meaning}) => {
   return (
     <div>
-      <p className="part-of-speech">{partOfSpeech}</p>
+      <p className="part-of-speech"><em>{partOfSpeech}</em></p>
       <p className="meaning">{meaning}</p>
     </div>
   )

@@ -7,3 +7,16 @@
   height: 8%;
 }
 
+.link {
+  text-decoration: none;
+  color: #333;
+  border: 1px black solid;
+  width: 100px;
+  height: 40px;
+}
+
+.link.active {
+  font-weight: bold;
+  text-decoration: none;
+  color: inherit;
+}

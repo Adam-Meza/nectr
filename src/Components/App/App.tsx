@@ -5,9 +5,10 @@ import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Switch, Route } from 'react-router-dom';
 import { fetchDefinition, fetchLetters } from '../../fetches';
 import { cleanDefinitionData, DefinitionProps, cleanGameData } from '../../utilites';
-import { Favotites } from '../Favorites/Favorites';
+import { Favorites } from '../Favorites/Favorites';
 import { Scoreboard } from '../Scoreboard/Scoreboard';
 import { DefinitionCard } from '../DefinitionCard/DefinitionCard';
+import { FavoritesProps } from '../Favorites/Favorites';
 import './App.css';
 // import { shuffle } from 'lodash';
 
@@ -17,7 +18,8 @@ function App() {
         [letters, setLetters] = useState<String[]>([]),
         [words, setWords] = useState<String[]>([]),
         [currentGuess, setGuess] = useState<any>(''),
-        [answers, setAnswers] = useState<String[]>([]),
+        [answers, setAnswers] = useState<FavoritesProps[]>([{word: '', definition: { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""}}]),
+        [favorites, setFavorites] = useState<FavoritesProps[]>([]),
         [definition, setDefinition] = useState<DefinitionProps>(
           { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""})
 
@@ -29,6 +31,13 @@ function App() {
     try {
       fetchDefinition(word).then((json) => {
         setDefinition(cleanDefinitionData(json[0]))
+
+        const newAnswer = {
+          word: word,
+          definition: definition
+        }
+
+        setAnswers([...answers, newAnswer]);
       })
     } catch(error : any) {
       setError(error)
@@ -40,7 +49,7 @@ function App() {
     if ( words.includes(guess.toLowerCase())) { 
       const newWords = words.filter(word => word !== guess)
       setWords(newWords);
-      setAnswers([...answers, guess]);
+
       setGuess('');
       getDefinition(guess);
     } else {
@@ -54,6 +63,7 @@ function App() {
     checkGuess(currentGuess)
     setGuess('')
   }
+
 
   const fetchData = async () => {
     try {
@@ -77,6 +87,10 @@ function App() {
   const randomizeLetters = () => {
     // setGuess(shuffle(currentGuess))
   }
+
+  const addFavorite = (newWord : any) => {
+    setFavorites([...favorites, newWord])
+  }
   
   useEffect(() => {
     fetchData()
@@ -87,7 +101,7 @@ function App() {
       <Header/>
       <Switch>
         <Route exact path ="/favorites" render={ () => (
-          <Favotites/>
+          <Favorites favorites ={favorites}/>
           )}
         />
         <Route exact path = "/" 
@@ -103,7 +117,7 @@ function App() {
               randomizeLetters = {randomizeLetters}
               />
               <aside>
-                <Scoreboard answers = {answers}/>
+                <Scoreboard answers = {answers} addFavorite= {addFavorite}/>
                 <DefinitionCard definition = {definition}/>
               </aside>
             </section>

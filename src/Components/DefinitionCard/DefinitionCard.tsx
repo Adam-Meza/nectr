@@ -15,8 +15,10 @@ export const DefinitionCard : React.FC<DefinitionCardProps> = ({definition}) => 
   })
   return (
     <div className="definition">
-      <h2>{word}</h2>
-      <p>{phonetic}</p>
+      <div className="title-box">
+        <h2>{word}</h2>
+        <p><em>{phonetic}</em></p>
+      </div>
       {meaningCards}
     </div>
   )

@@ -24,7 +24,6 @@ export const cleanDefinitionData = (definition : DefinitionProps) => {
   }
 }
 
-
 export interface GameDataFetchProps {
   center : String;
   letters : String;
@@ -33,7 +32,6 @@ export interface GameDataFetchProps {
 }
 
 export const cleanGameData = (data: GameDataFetchProps) => {
-  
   return {
     center: data.center.toUpperCase(),
     letters: data.letters.toUpperCase().split(''),
