@@ -1,8 +1,15 @@
 .piece-container {
-  border: 1px green solid;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
 }
 
 .gameboard {
@@ -11,6 +18,9 @@
 }
 
 button {
+  border: 0px;
+  border-radius: 3px;
+  margin: 20px 10px;
   height: 30px;
   width: 80px;
 }

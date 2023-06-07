@@ -3,7 +3,6 @@ import './/Boardpiece.css'
 
 interface BoardpieceProps {
   letter : String
-  center? : boolean
   updateCurrentGuess : (letter : String) => void
 }
 

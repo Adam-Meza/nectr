@@ -4,39 +4,41 @@ import './/gameboard.css'
 
 interface GameboardProps {
   center: String
-  letters: any
-  // wordList: String[]
+  letters: String[]
   currentGuess: String
   deleteLastLetter: () => void;
   handleSubmit: () => void;
   updateCurrentGuess : (letter : String) => void;
+  randomizeLetters : () => void
 }
 
-export const Gameboard : React.FC<GameboardProps> = ({deleteLastLetter, handleSubmit, currentGuess, center, letters, updateCurrentGuess}) => {
+export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLastLetter, handleSubmit, currentGuess, center, letters, updateCurrentGuess}) => {
+  const boardPieces = letters.map((letter : String) => {
+    return <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter ={letter}/>
+  })
 
-  letters = letters.split('')
   return (
     <main>
         <h2>{currentGuess}</h2>
       <section className = 'gameboard'>
       <div className="piece-container">
-        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {letters[0]}/>
-        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {letters[1]}/>
+        {boardPieces[0]}
+        {boardPieces[1]}
       </div>
       <div className="piece-container">
-        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {letters[2]}/>
-        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {center} center = {true}/>
-        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {letters[3]}/>
+        {boardPieces[2]}
+        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {center} />
+        {boardPieces[3]}
       </div>
       <div className="piece-container">
-        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {letters[4]}/>
-        <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter = {letters[5]}/>
+        {boardPieces[4]}
+        {boardPieces[5]}
       </div>
       </section>
       <div className ='button-container'>
         <button onClick = {() => handleSubmit()}>ENTER</button>
         <button onClick={()=> deleteLastLetter()}>DELETE</button>
-        <button></button>
+        <button onClick ={()=> randomizeLetters()}>RANDOM</button>
       </div>
     </main>
   )

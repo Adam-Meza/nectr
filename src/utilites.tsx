@@ -4,7 +4,7 @@ export interface DefinitionProps {
   word: String;
 }
 
-interface MeaningProps {
+export interface MeaningProps {
   partOfSpeech: String;
   definitions: any;
 }
@@ -21,5 +21,23 @@ export const cleanDefinitionData = (definition : DefinitionProps) => {
     word: definition.word,
     phonetic: definition.phonetic,
     meanings: selectedMeanings
+  }
+}
+
+
+export interface GameDataFetchProps {
+  center : String;
+  letters : String;
+  wordlist : String[];
+  words: Number
+}
+
+export const cleanGameData = (data: GameDataFetchProps) => {
+  
+  return {
+    center: data.center,
+    letters: data.letters.split(''),
+    words: data.wordlist,
+    amountOfWords: data.words
   }
 }

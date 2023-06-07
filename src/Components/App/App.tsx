@@ -5,22 +5,23 @@ import { Gameboard } from '../Gameboard/Gameboard';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Switch, Route } from 'react-router-dom';
 import { fetchDefinition, fetchLetters } from '../../fetches';
-import { cleanDefinitionData, DefinitionProps } from '../../utilites';
-import { Aside } from '../Aside/Aside';
+import { cleanDefinitionData, DefinitionProps, cleanGameData } from '../../utilites';
 import { Favotites } from '../Favorites/Favorites';
+import { Scoreboard } from '../Scoreboard/Scoreboard';
+import { DefinitionCard } from '../DefinitionCard/DefinitionCard';
+// import { shuffle } from 'lodash';
 
 function App() {
   const [error, setError] = useState(null),
-        [center, setCenter] = useState(''),
-        [letters, setLetters] = useState(''),
-        [wordlist, setWords] = useState<String[]>([]),
-        [currentGuess, setGuess] = useState<String>(''),
+        [center, setCenter] = useState<String>(''),
+        [letters, setLetters] = useState<String[]>([]),
+        [words, setWords] = useState<String[]>([]),
+        [currentGuess, setGuess] = useState<any>(''),
         [answers, setAnswers] = useState<String[]>([]),
         [definition, setDefinition] = useState<DefinitionProps>(
           { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""})
 
-  const updateCurrentGuess = (letter : String) => {
-    // console.log('test')
+  const updateCurrentGuess = (letter : String)  : void => {
     setGuess([currentGuess, letter].join(''))
   }
 
@@ -35,9 +36,9 @@ function App() {
   }
 
   const checkGuess = (guess : String) => {
-    if ( wordlist.includes(guess)) { 
-      const newWordList = wordlist.filter(word => word !== guess)
-      setWords(newWordList);
+    if ( words.includes(guess)) { 
+      const newWords = words.filter(word => word !== guess)
+      setWords(newWords);
       setAnswers([...answers, guess]);
       setGuess('');
       getDefinition(guess);
@@ -47,7 +48,7 @@ function App() {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = ()  : void => {
     checkGuess(currentGuess)
     setGuess('')
   }
@@ -55,10 +56,10 @@ function App() {
   const fetchData = async () => {
     try {
       fetchLetters().then((json) => {
-        const {letters, wordlist, center} = json
+        const {letters, words, center} = cleanGameData(json)
         setCenter(center)
         setLetters(letters)
-        setWords(wordlist)
+        setWords(words)
       })
 
     } catch(error : any) {
@@ -66,8 +67,12 @@ function App() {
     }
   }
 
-  const deleteLastLetter = () => {
+  const deleteLastLetter = () : void => {
     setGuess(currentGuess.slice(0, -1))
+  }
+
+  const randomizeLetters = () => {
+    // setGuess(shuffle(currentGuess))
   }
   
   useEffect(() => {
@@ -93,11 +98,12 @@ function App() {
               handleSubmit={handleSubmit}
               updateCurrentGuess={updateCurrentGuess}
               deleteLastLetter = {deleteLastLetter}
+              randomizeLetters = {randomizeLetters}
               />
-              <Aside 
-              answers = {answers}
-              definition={definition}
-              />
+              <aside>
+                <Scoreboard answers = {answers}/>
+                <DefinitionCard definition = {definition}/>
+              </aside>
             </section>
           )}
         />

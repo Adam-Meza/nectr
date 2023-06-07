@@ -1,11 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import './header.css'
 
 export function Header () {
   return ( 
     <header className="header">
-      <h1>Nectr</h1>
-      <NavLink to='/favorites'>this goes to favorites </NavLink>
+      <h1>nectr</h1>
+      <NavLink className ="link"to='/favorites'>FAVORITES</NavLink>
+      <NavLink className ="link"to='/stats'>STATS</NavLink>
     </header>
   )
 }
