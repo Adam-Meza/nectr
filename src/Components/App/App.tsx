@@ -17,8 +17,8 @@ function App() {
         [center, setCenter] = useState<String>(''),
         [letters, setLetters] = useState<String[]>([]),
         [words, setWords] = useState<String[]>([]),
-        [currentGuess, setGuess] = useState<any>(''),
-        [answers, setAnswers] = useState<FavoritesProps[]>([{word: '', definition: { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""}}]),
+        [currentGuess, setGuess] = useState<String>(''),
+        [answers, setAnswers] = useState<any[]>([]),
         [favorites, setFavorites] = useState<FavoritesProps[]>([]),
         [definition, setDefinition] = useState<DefinitionProps>(
           { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""})
@@ -49,13 +49,12 @@ function App() {
     if ( words.includes(guess.toLowerCase())) { 
       const newWords = words.filter(word => word !== guess)
       setWords(newWords);
-
       setGuess('');
       getDefinition(guess);
-    } else {
-      // 121234234234234234234234234234234
-      // console.log('nada')
-      // make this display an error !!!
+    } else if (guess.length < 3) {
+      console.log('it was less than three!')
+    } else if (true) {
+
     }
   }
 
@@ -85,7 +84,10 @@ function App() {
   }
 
   const randomizeLetters = () => {
-    // setGuess(shuffle(currentGuess))
+    const shuffledLetters = letters.slice().sort(function() {
+      return 0.5 - Math.random();
+    });
+    setLetters(shuffledLetters)
   }
 
   const addFavorite = (newWord : any) => {
@@ -104,7 +106,7 @@ function App() {
           <Favorites favorites ={favorites}/>
           )}
         />
-        <Route exact path = "/" 
+        <Route exact path ="/" 
           render = { () => (
             <section className ='home-display'>
               <Gameboard 

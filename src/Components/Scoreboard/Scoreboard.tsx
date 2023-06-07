@@ -9,7 +9,7 @@ interface ScoreboardProps {
 }
 
 export const Scoreboard : React.FC <ScoreboardProps> = ({answers, addFavorite}) => {
-  const correctAnswers = answers.map(answer => (<WordCard word ={answer.word} definition ={answer.definition} addFavorite = {addFavorite}/>))
+  const correctAnswers = answers.map(answer => (<WordCard word ={answer.word} definition = {answer.definition} addFavorite = {addFavorite}/>))
   
   return (
     <div className='scoreboard'>

@@ -8,18 +8,18 @@ export interface FavoritesProps {
   definition: DefinitionProps;
 }
 
-interface test {
-  favorites: any[]
+interface FavoritesCompProps {
+  favorites: FavoritesProps[]
 }
 
-export const Favorites : React.FC<test> = (props) => {
-  useEffect(() => {
-    console.log(props)
-  })
-
-  // const favoriteCards = props..map((fav : FavoritesProps)=> {
-  //   return ( <FavoriteCard favorite ={fav}/> )
+export const Favorites : React.FC<FavoritesCompProps> = ({favorites}) => {
+  // useEffect(() => {
+  //   console.log(favorites)
   // })
+
+  const favoriteCards = favorites.map((fav : FavoritesProps)=> {
+    return ( <FavoriteCard favorite ={fav}/> )
+  })
   return (
     <section>
       
