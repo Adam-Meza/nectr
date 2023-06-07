@@ -1,8 +1,5 @@
 import React from "react";
 import { Gameboard } from '../Gameboard/Gameboard';
-import { Scoreboard } from '../Scoreboard/Scoreboard';
-import { Definition } from '../Definition/Definition';
-import { Aside } from "../Aside/Aside";
 
 interface MainProps {
   answers : String[]
@@ -16,7 +13,6 @@ interface MainProps {
 
 export const Main : React.FC<MainProps> = ({handleSubmit, answers, currentGuess, letters, center, wordlist, updateCurrentGuess}) => {
   return (
-    <>
       <main>
         <Gameboard
           updateCurrentGuess = {updateCurrentGuess}
@@ -26,10 +22,5 @@ export const Main : React.FC<MainProps> = ({handleSubmit, answers, currentGuess,
           center ={center} 
           words ={wordlist} />
     </main>
-    <Aside 
-      currentGuess = {currentGuess}
-      answers = {answers}
-    />
-  </>
   )
 }

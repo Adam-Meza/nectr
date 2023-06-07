@@ -2,8 +2,8 @@ import React from "react";
 
 export function Header () {
   return ( 
-  <nav>
+    <header className="header">
 
-  </nav>
+    </header>
   )
 }

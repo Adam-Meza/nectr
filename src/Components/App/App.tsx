@@ -5,31 +5,47 @@ import { Main } from '../Main/Main';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Switch, Route } from 'react-router-dom';
 import { fetchDefinition, fetchLetters } from '../../fetches';
+import { cleanDefinitionData, DefinitionProps } from '../../utilites';
+import { Aside } from '../Aside/Aside';
 
 function App() {
-  const [error, setError] = useState(null)
-  const [center, setCenter] = useState('')
-  const [letters, setLetters] = useState('')
-  const [wordlist, setWords] = useState<String[]>([])
-  const [currentGuess, setGuess] = useState<String>('')
-  const [answers, setAnswers] = useState<String[]>([])
+  const [error, setError] = useState(null),
+        [center, setCenter] = useState(''),
+        [letters, setLetters] = useState(''),
+        [wordlist, setWords] = useState<String[]>([]),
+        [currentGuess, setGuess] = useState<String>(''),
+        [answers, setAnswers] = useState<String[]>([]),
+        [definition, setDefinition] = useState<DefinitionProps>(
+          { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""})
 
   const updateCurrentGuess = (letter : String) => {
-    console.log('test')
+    // console.log('test')
     setGuess([currentGuess, letter].join(''))
+  }
+
+  const getDefinition = async (word : String) => {
+    try {
+      fetchDefinition(word).then((json) => {
+        setDefinition(cleanDefinitionData(json[0]))
+      })
+    } catch(error : any) {
+      setError(error)
+    }
   }
 
   const checkGuess = (guess : String) => {
     if ( wordlist.includes(guess)) { 
       const newWordList = wordlist.filter(word => word !== guess)
-      setWords(newWordList)
-      setAnswers([...answers, guess])
-      // console.log(getDefinition(guess))
-      setGuess('')
+      setWords(newWordList);
+      setAnswers([...answers, guess]);
+      setGuess('');
+      getDefinition(guess);
     } else {
-      console.log('nada')
+      // console.log('nada')
+      // make this display an error !!!
     }
   }
+
 
   const handleSubmit = () => {
     checkGuess(currentGuess)
@@ -61,20 +77,24 @@ function App() {
       <Switch>
         <Route exact path = "/" 
           render = { () => (
-            <Main 
-            currentGuess = {currentGuess}
-            letters= {letters}
-            wordlist={wordlist}
-            center={center}
-            handleSubmit={handleSubmit}
-            updateCurrentGuess={updateCurrentGuess}
-            answers = {answers}
-            />
+            <>
+              <Main 
+              currentGuess = {currentGuess}
+              letters= {letters}
+              wordlist={wordlist}
+              center={center}
+              handleSubmit={handleSubmit}
+              updateCurrentGuess={updateCurrentGuess}
+              answers = {answers}
+              />
+              <Aside 
+              answers = {answers}
+              definition={definition}
+              />
+          </>
           )}
         />
     </Switch>
-
-
     </div>
   );
 }
