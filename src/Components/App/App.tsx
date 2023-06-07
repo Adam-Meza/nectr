@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import { Header } from '../Header/Header';
-import { Main } from '../Main/Main';
+import { Gameboard } from '../Gameboard/Gameboard';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Switch, Route } from 'react-router-dom';
 import { fetchDefinition, fetchLetters } from '../../fetches';
 import { cleanDefinitionData, DefinitionProps } from '../../utilites';
 import { Aside } from '../Aside/Aside';
+import { Favotites } from '../Favorites/Favorites';
 
 function App() {
   const [error, setError] = useState(null),
@@ -46,7 +47,6 @@ function App() {
     }
   }
 
-
   const handleSubmit = () => {
     checkGuess(currentGuess)
     setGuess('')
@@ -56,7 +56,6 @@ function App() {
     try {
       fetchLetters().then((json) => {
         const {letters, wordlist, center} = json
-
         setCenter(center)
         setLetters(letters)
         setWords(wordlist)
@@ -65,6 +64,10 @@ function App() {
     } catch(error : any) {
       setError(error)
     }
+  }
+
+  const deleteLastLetter = () => {
+    setGuess(currentGuess.slice(0, -1))
   }
   
   useEffect(() => {
@@ -75,23 +78,27 @@ function App() {
     <div className="App">
       <Header/>
       <Switch>
+        <Route exact path ="/favorites" render={ () => (
+          <Favotites/>
+          )}
+        />
         <Route exact path = "/" 
           render = { () => (
-            <>
-              <Main 
+            <section className ='home-display'>
+              <Gameboard 
               currentGuess = {currentGuess}
               letters= {letters}
-              wordlist={wordlist}
+              // wordlist={wordlist}
               center={center}
               handleSubmit={handleSubmit}
               updateCurrentGuess={updateCurrentGuess}
-              answers = {answers}
+              deleteLastLetter = {deleteLastLetter}
               />
               <Aside 
               answers = {answers}
               definition={definition}
               />
-          </>
+            </section>
           )}
         />
     </Switch>
