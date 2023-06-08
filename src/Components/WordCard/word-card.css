@@ -1,14 +1,20 @@
-.word-card { 
+.word-card {
+  font-size: 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border: grey 1px solid;
-  padding: 10px;
-  height: 50px;
+  padding: 7px;
+  height: 30px;
+  width: 90%;
+  margin-bottom: 4px
+
 }
 
 .favorite-button {
-  
+  padding: 2px;
+  width: 80px;
+  border: none;
 }
 

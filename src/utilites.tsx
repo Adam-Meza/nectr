@@ -9,6 +9,14 @@ export interface MeaningProps {
   definitions: any;
 }
 
+// {
+//   "definition": "The lastborn of a family; the youngest sibling, irrespective of age.",
+//   "synonyms": [],
+//   "antonyms": [],
+//   "example": "Adam is the baby of the family."
+// },
+
+
 export const cleanDefinitionData = (definition : DefinitionProps) => {
   const selectedMeanings = definition.meanings.map((meaning : MeaningProps) => {
     return {

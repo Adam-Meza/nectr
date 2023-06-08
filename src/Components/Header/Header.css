@@ -5,13 +5,18 @@
   align-items: center;
   width: 100vw;
   height: 8%;
+  padding: 10px;
+  
 }
 
 .link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
-
-  width: 100px;
-  height: 40px;
+  padding: 10px 20px 10px 20px;
+  width: auto;
+  height: auto;
 }
 
 .link.active {
@@ -21,12 +26,19 @@
 }
 
 .title{
-  padding: 10px;
-  border: 1px solid orange
+  font-size: 36px;
+  padding: 13px;
+  border: 2px solid orange
 }
 
 .nav-link {
   color: #333;
   border: 1px black solid;
+}
 
+.link-container {
+  width:30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }

@@ -29,7 +29,6 @@ function App() {
   const getDefinition = async (word: String) => {
     try {
       const json = await fetchDefinition(word);
-      // console.log(json)
       if(json.title) {
         setAnswers((prevAnswers) => [...prevAnswers, { meanings: [{partOfSpeech: '', definitions: [""]}], word: word, phonetic: ""}])
         throw (json)
@@ -86,7 +85,6 @@ function App() {
   };
 
   const randomizeLetters = () : void => {
-    console.log(letters)
     const shuffledLetters = letters.slice().sort(function() {
       return 0.5 - Math.random();
     });

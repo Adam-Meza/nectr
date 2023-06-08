@@ -10,7 +10,7 @@ interface BoardpieceProps {
 export const Boardpiece : React.FC<BoardpieceProps> = ({letter, updateCurrentGuess, id}) => {
   return (
     <button className = 'boardpiece' onClick={() => updateCurrentGuess(letter)} id ={id}>
-      {letter}
+      <strong>{letter}</strong>
     </button>
   );
 };

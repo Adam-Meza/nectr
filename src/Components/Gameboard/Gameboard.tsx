@@ -20,7 +20,7 @@ export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLa
 
   return (
     <main>
-        <h2>{currentGuess}</h2>
+        <h2 className="current-guess">{currentGuess}</h2>
       <section className = 'gameboard'>
       <div className="piece-container">
         {boardPieces[0]}

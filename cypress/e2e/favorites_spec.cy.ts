@@ -3,7 +3,7 @@ describe("Favorites View", () => {
     cy.intercept('GET', 'https://freebee.fun/cgi-bin/today', {
       fixture: "game.json"
     }).intercept('GET', 'https://api.dictionaryapi.dev/api/v2/entries/en/baby', {
-      fixture: "defintion.json"
+      fixture: "definition.json"
     })
     .visit('http://localhost:3000/')
   })

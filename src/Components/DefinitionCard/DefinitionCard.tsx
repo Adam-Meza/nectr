@@ -13,6 +13,7 @@ export const DefinitionCard : React.FC<DefinitionCardProps> = ({definition}) => 
     const {partOfSpeech, definitions} = meaningInst
     return <MeaningCard partOfSpeech={partOfSpeech} meaning ={definitions}/>
   })
+  
   return (
     <div className="definition">
       <div className="title-box">
