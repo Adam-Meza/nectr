@@ -8,10 +8,11 @@ import { cleanDefinitionData, DefinitionProps, cleanGameData } from '../../utili
 import { Favorites } from '../Favorites/Favorites';
 import { Scoreboard } from '../Scoreboard/Scoreboard';
 import { DefinitionCard } from '../DefinitionCard/DefinitionCard';
+import { Stats } from '../Stats/Stats';
 import './App.css';
 
 function App() {
-  const [error, setError] = useState(null),
+  const [error, setError] = useState<String>(''),
         [center, setCenter] = useState<String>(''),
         [letters, setLetters] = useState<String[]>([]),
         [words, setWords] = useState<String[]>([]),
@@ -21,10 +22,10 @@ function App() {
         [definition, setDefinition] = useState<DefinitionProps>(
           { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""})
 
-  const updateCurrentGuess = (letter : String)  : void => {
-    setGuess([currentGuess, letter].join(''));
-  };
-
+  useEffect(() => {
+    fetchData();
+  }, []);
+ 
   const getDefinition = async (word: String) => {
     try {
       const json = await fetchDefinition(word);
@@ -37,9 +38,8 @@ function App() {
       setError(error);
     }
   };
-  
 
-  const checkGuess = (guess : String) => {
+  const checkGuess = (guess : String) : void => {
     guess = guess.toLowerCase();
     if (words.includes(guess.toLowerCase())) { 
       const newWords = words.filter(word => word !== guess);
@@ -47,14 +47,16 @@ function App() {
       getDefinition(guess);
       setGuess('');
     } else if (guess.length < 4) {
-      console.log('it was less than Four!');
+      setError('Guesses must be at least 4 letters!');
+    } else if (answers.find(answer => answer.word === guess) ){
+      setError('You already got that word!')
     } else {
-      console.log('not a valid word!');
+      setError('Please enter a valid word!');
     };
   };
 
   const handleSubmit = ()  : void => {
-    console.log(currentGuess)
+    setError('')
     checkGuess(currentGuess);
     setGuess('');
   };
@@ -73,25 +75,34 @@ function App() {
     };
   };
 
+  // Funcitons for gameplay buttons
   const deleteLastLetter = () : void => {
     setGuess(currentGuess.slice(0, -1));
   };
 
-  const randomizeLetters = () => {
+  const randomizeLetters = () : void => {
     const shuffledLetters = letters.slice().sort(function() {
       return 0.5 - Math.random();
     });
     setLetters(shuffledLetters);
   };
 
+  const updateCurrentGuess = (letter : String)  : void => {
+    setGuess([currentGuess, letter].join(''));
+  };
+
+  //functions for word cards
+  const unfavorite = (wordToUnfavorite : any) => {
+    const updatedFavorites = favorites.filter(word => word !== wordToUnfavorite)
+    setFavorites([...updatedFavorites])
+  }
+
   const addFavorite = (newDefinition : DefinitionProps ) => {
-    setFavorites([...favorites, newDefinition]);
+    if (!favorites.includes(newDefinition)) {
+      setFavorites([...favorites, newDefinition]);
+    }
   };
   
-  useEffect(() => {
-    fetchData();
-  }, []);
- 
   return (
     <div className="App">
       <Header/>
@@ -99,6 +110,10 @@ function App() {
         <Route exact path ="/favorites" render={ () => (
           <Favorites favorites ={favorites}/>
           )}
+        />
+        <Route exact path = "/stats" render={ ()=> (
+          <Stats total={words.length} correctAnswers={answers}/>
+         )}
         />
         <Route exact path ="/" 
           render = { () => (
@@ -111,10 +126,16 @@ function App() {
               updateCurrentGuess={updateCurrentGuess}
               deleteLastLetter = {deleteLastLetter}
               randomizeLetters = {randomizeLetters}
+
               />
               <aside>
-                <Scoreboard answers = {answers} addFavorite= {addFavorite}/>
-                <DefinitionCard definition = {definition}/>
+              <Scoreboard
+                answers = {answers}
+                addFavorite= {addFavorite}
+                unfavorite = {unfavorite}
+              />
+                { !error && <DefinitionCard definition = {definition}/> }
+                { error && <ErrorMessage message={error}/> }
               </aside>
             </section>
           )}

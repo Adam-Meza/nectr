@@ -10,6 +10,7 @@ interface GameboardProps {
   handleSubmit: () => void;
   updateCurrentGuess : (letter : String) => void;
   randomizeLetters : () => void;
+
 };
 
 export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLastLetter, handleSubmit, currentGuess, center, letters, updateCurrentGuess}) => {

@@ -18,13 +18,19 @@ describe('Main Page', () => {
       .get('.game-play-button').last().should('have.text', 'ENTER')
     })
 
-    it('Should be able to input answer and see definition', () => {
+    it('Should be able to input answer, edit input and see definition', () => {
       cy.get('button').eq(4).click()
         .get('button').eq(5).click()
         .get('button').eq(4).click()
         .get('button').eq(3).click()
+        .get('h2').should('have.text', 'BABY')
 
-      cy.get('h2').should('have.text', 'BABY')
+      cy.get('.game-play-button').first().click().click()
+        .get('h2').should('have.text', 'BA')
+
+      cy.get('button').eq(4).click()
+        .get('button').eq(3).click()
+        .get('h2').should('have.text', 'BABY')
         .get('.game-play-button').last().click()
 
         .get('.title-box')
@@ -34,5 +40,9 @@ describe('Main Page', () => {
         .get('p').eq(2).should('have.text', 'A very young human, particularly from birth to a couple of years old or until walking is fully mastered.')
         .get('p').eq(3).should('have.text', 'verb')
         .get('p').eq(4).should('have.text', 'To coddle; to pamper somebody like an infant.')
-    })
+        
+        cy.get('.scoreboard')
+          .get('.word-card')
+          .get('h3').should('have.text', 'baby')
+      })
 })
