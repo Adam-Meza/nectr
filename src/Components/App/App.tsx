@@ -29,13 +29,19 @@ function App() {
   const getDefinition = async (word: String) => {
     try {
       const json = await fetchDefinition(word);
-      const cleanedDefinition = cleanDefinitionData(json[0]);
+      // console.log(json)
+      if(json.title) {
+        setAnswers((prevAnswers) => [...prevAnswers, { meanings: [{partOfSpeech: '', definitions: [""]}], word: word, phonetic: ""}])
+        throw (json)
+      } else {
+        const cleanedDefinition = cleanDefinitionData(json[0]);
       
-      setDefinition(cleanedDefinition);  
-      setAnswers((prevAnswers) => [...prevAnswers, cleanedDefinition]);  
-
+        setDefinition(cleanedDefinition);  
+        setAnswers((prevAnswers) => [...prevAnswers, cleanedDefinition]);  
+  
+      }
     } catch (error : any) {
-      setError(error);
+      setError(`${error.message} ${error.resolution}`);
     }
   };
 
@@ -64,7 +70,6 @@ function App() {
   const fetchData = async () => {
     try {
       fetchLetters().then((json) => {
-        console.log(json)
         const {letters, words, center} = cleanGameData(json);
         setCenter(center);
         setLetters(letters);
@@ -81,6 +86,7 @@ function App() {
   };
 
   const randomizeLetters = () : void => {
+    console.log(letters)
     const shuffledLetters = letters.slice().sort(function() {
       return 0.5 - Math.random();
     });
@@ -92,7 +98,7 @@ function App() {
   };
 
   //functions for word cards
-  const unfavorite = (wordToUnfavorite : any) => {
+  const unfavorite = (wordToUnfavorite : DefinitionProps) => {
     const updatedFavorites = favorites.filter(word => word !== wordToUnfavorite)
     setFavorites([...updatedFavorites])
   }
@@ -107,6 +113,7 @@ function App() {
     <div className="App">
       <Header/>
       <Switch>
+        
         <Route exact path ="/favorites" render={ () => (
           <Favorites favorites ={favorites}/>
           )}
@@ -138,6 +145,10 @@ function App() {
                 { error && <ErrorMessage message={error}/> }
               </aside>
             </section>
+          )}
+        />
+        <Route exact path ="/*" render={ () => (
+          <ErrorMessage message ={"Nothing to see here!"}/>
           )}
         />
     </Switch>

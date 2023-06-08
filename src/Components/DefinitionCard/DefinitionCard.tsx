@@ -19,7 +19,7 @@ export const DefinitionCard : React.FC<DefinitionCardProps> = ({definition}) => 
         <h2 className ="word">{word}</h2>
         <p className="part-of-speech"><em>{phonetic}</em></p>
       </div>
-      {meaningCards}
+      {meanings && meaningCards}
     </div>
   )
 }

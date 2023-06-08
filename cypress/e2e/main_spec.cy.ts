@@ -2,7 +2,9 @@ describe('Main Page', () => {
   beforeEach(() => {
     cy.intercept('GET', 'https://freebee.fun/cgi-bin/today', {
       fixture: "game.json"
-    }).intercept('GET', 'https://api.dictionaryapi.dev/api/v2/entries/en/baby')
+    }).intercept('GET', 'https://api.dictionaryapi.dev/api/v2/entries/en/baby', {
+      fixture: "definition.json"
+    })
     .visit('http://localhost:3000/')
   })
 
@@ -45,4 +47,12 @@ describe('Main Page', () => {
           .get('.word-card')
           .get('h3').should('have.text', 'baby')
       })
+
+      it("should be able to randomize the letters", () => {
+        // cy.get('.App').then(($component) => {
+        //   const letters = $component[0].__vue__.$data.letters;
+        //   console.log(letters);
+        //   expect(letters).to.deep.equal(['N', 'E', 'G', 'B', 'A', 'M']);
+        // });
+      });
 })

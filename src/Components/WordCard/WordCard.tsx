@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './word-card.css';
 import { DefinitionProps } from "../../utilites";
  
@@ -17,10 +17,14 @@ export const WordCard : React.FC<WordCardProps> = ({definition, addFavorite, unf
       addFavorite(definition)
       setFavorite(true)
     } else {
-      setFavorite(null)
       unfavorite(definition)
+      setFavorite(null)
     }
   }
+
+  useEffect(()=> {
+
+  }, [])
   return (
     <div className="word-card">
       <h3>{definition.word}</h3>
