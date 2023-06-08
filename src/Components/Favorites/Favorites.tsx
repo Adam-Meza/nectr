@@ -1,28 +1,20 @@
 import React, { useEffect } from "react";
 // import { FavoritesProps } from "../App/App";
 import { DefinitionProps } from "../../utilites";
-import { FavoriteCard } from "../FavoriteCard/FavoriteCard";
-
-export interface FavoritesProps {
-  word: String;
-  definition: DefinitionProps;
-}
+import { DefinitionCard } from "../DefinitionCard/DefinitionCard";
 
 interface FavoritesCompProps {
-  favorites: FavoritesProps[]
+  favorites: DefinitionProps[]
 }
 
 export const Favorites : React.FC<FavoritesCompProps> = ({favorites}) => {
-  // useEffect(() => {
-  //   console.log(favorites)
-  // })
-
-  const favoriteCards = favorites.map((fav : FavoritesProps)=> {
-    return ( <FavoriteCard favorite ={fav}/> )
+  const favoriteCards = favorites.map((fav : DefinitionProps)=> {
+    return ( <DefinitionCard definition ={fav}/> )
   })
+
   return (
     <section>
-      
+      {favoriteCards}
     </section>
   )
 }

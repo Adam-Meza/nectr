@@ -3,19 +3,19 @@ import { Boardpiece } from "../Boardpiece/Boardpiece";
 import './/gameboard.css'
 
 interface GameboardProps {
-  center: String
-  letters: String[]
-  currentGuess: String
+  center: String;
+  letters: String[];
+  currentGuess: String;
   deleteLastLetter: () => void;
   handleSubmit: () => void;
   updateCurrentGuess : (letter : String) => void;
-  randomizeLetters : () => void
-}
+  randomizeLetters : () => void;
+};
 
 export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLastLetter, handleSubmit, currentGuess, center, letters, updateCurrentGuess}) => {
   const boardPieces = letters.map((letter : String, index : number) => {
     return <Boardpiece updateCurrentGuess= {updateCurrentGuess} letter ={letter} key ={index}/>
-  })
+  });
 
   return (
     <main>
@@ -36,10 +36,10 @@ export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLa
       </div>
       </section>
       <div className ='button-container'>
-        <button onClick = {() => handleSubmit()}>ENTER</button>
-        <button onClick={()=> deleteLastLetter()}>DELETE</button>
-        <button onClick ={()=> randomizeLetters()}>RANDOM</button>
+        <button className ="game-play-button" onClick={()=> deleteLastLetter()}>DELETE</button>
+        <button className ="game-play-button" onClick ={()=> randomizeLetters()}>RANDOM</button>
+        <button className ="game-play-button" onClick = {() => handleSubmit()}>ENTER</button>
       </div>
     </main>
-  )
-}
+  );
+};

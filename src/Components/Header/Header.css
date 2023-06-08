@@ -9,8 +9,7 @@
 
 .link {
   text-decoration: none;
-  color: #333;
-  border: 1px black solid;
+
   width: 100px;
   height: 40px;
 }
@@ -19,4 +18,15 @@
   font-weight: bold;
   text-decoration: none;
   color: inherit;
+}
+
+.title{
+  padding: 10px;
+  border: 1px solid orange
+}
+
+.nav-link {
+  color: #333;
+  border: 1px black solid;
+
 }

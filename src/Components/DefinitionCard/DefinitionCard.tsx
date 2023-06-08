@@ -4,7 +4,7 @@ import { DefinitionProps, MeaningProps } from "../../utilites";
 import { MeaningCard } from "../MeaningCard/MeaningCard";
 
 interface DefinitionCardProps {
-  definition: DefinitionProps
+  definition: DefinitionProps;
 }
 
 export const DefinitionCard : React.FC<DefinitionCardProps> = ({definition}) => {

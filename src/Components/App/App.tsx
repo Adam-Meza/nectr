@@ -8,9 +8,7 @@ import { cleanDefinitionData, DefinitionProps, cleanGameData } from '../../utili
 import { Favorites } from '../Favorites/Favorites';
 import { Scoreboard } from '../Scoreboard/Scoreboard';
 import { DefinitionCard } from '../DefinitionCard/DefinitionCard';
-import { FavoritesProps } from '../Favorites/Favorites';
 import './App.css';
-// import { shuffle } from 'lodash';
 
 function App() {
   const [error, setError] = useState(null),
@@ -18,85 +16,81 @@ function App() {
         [letters, setLetters] = useState<String[]>([]),
         [words, setWords] = useState<String[]>([]),
         [currentGuess, setGuess] = useState<String>(''),
-        [answers, setAnswers] = useState<any[]>([]),
-        [favorites, setFavorites] = useState<FavoritesProps[]>([]),
+        [answers, setAnswers] = useState<DefinitionProps[]>([]),
+        [favorites, setFavorites] = useState<DefinitionProps[]>([]),
         [definition, setDefinition] = useState<DefinitionProps>(
           { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""})
 
   const updateCurrentGuess = (letter : String)  : void => {
-    setGuess([currentGuess, letter].join(''))
-  }
+    setGuess([currentGuess, letter].join(''));
+  };
 
-  const getDefinition = async (word : String) => {
+  const getDefinition = async (word: String) => {
     try {
-      fetchDefinition(word).then((json) => {
-        setDefinition(cleanDefinitionData(json[0]))
+      const json = await fetchDefinition(word);
+      const cleanedDefinition = cleanDefinitionData(json[0]);
+      
+      setDefinition(cleanedDefinition);  
+      setAnswers((prevAnswers) => [...prevAnswers, cleanedDefinition]);  
 
-        const newAnswer = {
-          word: word,
-          definition: definition
-        }
-
-        setAnswers([...answers, newAnswer]);
-      })
-    } catch(error : any) {
-      setError(error)
+    } catch (error : any) {
+      setError(error);
     }
-  }
+  };
+  
 
   const checkGuess = (guess : String) => {
-    guess = guess.toLowerCase()
-    if ( words.includes(guess.toLowerCase())) { 
-      const newWords = words.filter(word => word !== guess)
+    guess = guess.toLowerCase();
+    if (words.includes(guess.toLowerCase())) { 
+      const newWords = words.filter(word => word !== guess);
       setWords(newWords);
-      setGuess('');
       getDefinition(guess);
-    } else if (guess.length < 3) {
-      console.log('it was less than three!')
-    } else if (true) {
-
-    }
-  }
+      setGuess('');
+    } else if (guess.length < 4) {
+      console.log('it was less than Four!');
+    } else {
+      console.log('not a valid word!');
+    };
+  };
 
   const handleSubmit = ()  : void => {
-    checkGuess(currentGuess)
-    setGuess('')
-  }
-
+    console.log(currentGuess)
+    checkGuess(currentGuess);
+    setGuess('');
+  };
 
   const fetchData = async () => {
     try {
       fetchLetters().then((json) => {
-
-        const {letters, words, center} = cleanGameData(json)
-        setCenter(center)
-        setLetters(letters)
-        setWords(words)
-      })
-
+        console.log(json)
+        const {letters, words, center} = cleanGameData(json);
+        setCenter(center);
+        setLetters(letters);
+        setWords(words);
+      });
     } catch(error : any) {
       setError(error)
-    }
-  }
+    };
+  };
 
   const deleteLastLetter = () : void => {
-    setGuess(currentGuess.slice(0, -1))
-  }
+    setGuess(currentGuess.slice(0, -1));
+  };
 
   const randomizeLetters = () => {
     const shuffledLetters = letters.slice().sort(function() {
       return 0.5 - Math.random();
     });
-    setLetters(shuffledLetters)
-  }
+    setLetters(shuffledLetters);
+  };
 
-  const addFavorite = (newWord : any) => {
-    setFavorites([...favorites, newWord])
-  }
+  const addFavorite = (newDefinition : DefinitionProps ) => {
+    setFavorites([...favorites, newDefinition]);
+  };
   
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
  
   return (
     <div className="App">
@@ -128,6 +122,6 @@ function App() {
     </Switch>
     </div>
   );
-}
+};
 
 export default App;

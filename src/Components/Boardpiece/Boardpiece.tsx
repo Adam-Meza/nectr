@@ -2,9 +2,9 @@ import React from "react";
 import './/Boardpiece.css'
 
 interface BoardpieceProps {
-  letter : String
-  id?: string
-  updateCurrentGuess : (letter : String) => void
+  letter : String;
+  id?: string;
+  updateCurrentGuess : (letter : String) => void;
 }
 
 export const Boardpiece : React.FC<BoardpieceProps> = ({letter, updateCurrentGuess, id}) => {
@@ -12,5 +12,5 @@ export const Boardpiece : React.FC<BoardpieceProps> = ({letter, updateCurrentGue
     <button className = 'boardpiece' onClick={() => updateCurrentGuess(letter)} id ={id}>
       {letter}
     </button>
-  )
-}
+  );
+};
