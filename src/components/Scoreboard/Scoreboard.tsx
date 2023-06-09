@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import './/Scoreboard.css'
+import './Scoreboard.css'
 import { WordCard } from "../WordCard/WordCard";
 import { DefinitionProps } from "../../utilites";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import './/Boardpiece.css'
+import './Boardpiece.css'
 
 interface BoardpieceProps {
   letter : String;

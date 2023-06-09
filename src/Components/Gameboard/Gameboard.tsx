@@ -1,6 +1,6 @@
 import React from "react";
 import { Boardpiece } from "../Boardpiece/Boardpiece";
-import './/gameboard.css'
+import './gameboard.css'
 const RandomButton = require( '../../assets/randomize-button.jpg')
 
 interface GameboardProps {
