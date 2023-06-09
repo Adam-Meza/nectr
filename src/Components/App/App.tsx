@@ -11,7 +11,7 @@ import { DefinitionCard } from '../DefinitionCard/DefinitionCard';
 import { Stats } from '../Stats/Stats';
 import './App.css';
 
-function App() {
+const App = () => {
   const [error, setError] = useState<String>(''),
         [center, setCenter] = useState<String>(''),
         [letters, setLetters] = useState<String[]>([]),
@@ -36,7 +36,8 @@ function App() {
         setWords(words);
       });
     } catch(error : any) {
-      setError(error);
+      // console.log(error)
+      setError("Something went wrong");
     };
   };
  
@@ -110,7 +111,7 @@ function App() {
 
   const checkFavorites = (word : String) => {
     return favorites.find(fav => fav.word === word ) ? true : false
-  }
+  };
   
   return (
     <div className="App">

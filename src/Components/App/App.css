@@ -38,3 +38,8 @@ aside {
 button:hover {
   cursor: pointer;
 }
+
+button :active {
+  background-color: rgb(205, 205, 205);
+  transform: translateY(5px);
+}

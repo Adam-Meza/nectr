@@ -15,7 +15,7 @@ export const Favorites : React.FC<FavoritesCompProps> = ({favorites}) => {
 
   return (
     <section>
-      {!favorites && <ErrorMessage message = "No Favorites yet!"/>}
+      {favorites.length === 0 && <ErrorMessage message = "No Favorites yet!"/>}
       {favorites && favoriteCards}
     </section>
   )

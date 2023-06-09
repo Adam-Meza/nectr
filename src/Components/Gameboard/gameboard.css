@@ -28,6 +28,12 @@ main {
   width: 100px;
 }
 
+.game-play-button:active {
+  background-color: rgb(205, 205, 205);
+  transform: translateY(3px);
+}
+
 .current-guess {
+  height: 30px;
   font-size: 36px;
 }
