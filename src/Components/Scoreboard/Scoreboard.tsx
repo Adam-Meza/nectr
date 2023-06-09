@@ -7,14 +7,16 @@ interface ScoreboardProps {
   answers : DefinitionProps[];
   addFavorite: (definition : DefinitionProps) => void;
   unfavorite : (word : any) => void;
+  checkFavorites: (word : String) => Boolean
 };
 
-export const Scoreboard : React.FC <ScoreboardProps> = ({answers, addFavorite, unfavorite}) => {
+export const Scoreboard : React.FC <ScoreboardProps> = ({answers, addFavorite, unfavorite, checkFavorites}) => {
   const correctAnswers = answers.map(answer => (
     <WordCard 
       definition = {answer}
       addFavorite = {addFavorite}
       unfavorite = {unfavorite}
+      checkFavorites = {checkFavorites}
       />
   ));
   

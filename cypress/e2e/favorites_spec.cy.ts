@@ -29,5 +29,11 @@ describe("Favorites View", () => {
   .get('p').eq(3).should('have.text', 'verb')
   .get('p').eq(4).should('have.text', 'To coddle; to pamper somebody like an infant.')
 
+  cy.get('.link').first().click()
+    .get('.unfavorite-button').first().click()
+
+  cy.get('.link').eq(1).click()
+
+  cy.get('.definition').should('not.exist')
   })
 })

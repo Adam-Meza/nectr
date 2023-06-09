@@ -5,15 +5,15 @@ import { MeaningCard } from "../MeaningCard/MeaningCard";
 
 interface DefinitionCardProps {
   definition: DefinitionProps;
-}
+};
 
 export const DefinitionCard : React.FC<DefinitionCardProps> = ({definition}) => {
-  const {word, meanings, phonetic} = definition
+  const {word, meanings, phonetic} = definition;
   const meaningCards = meanings.map((meaningInst : MeaningProps) => {
-    const {partOfSpeech, definitions} = meaningInst
-    return <MeaningCard partOfSpeech={partOfSpeech} meaning ={definitions}/>
-  })
-  
+    const {partOfSpeech, definitions} = meaningInst;
+    return <MeaningCard partOfSpeech={partOfSpeech} meaning ={definitions}/>;
+  });
+
   return (
     <div className="definition">
       <div className="title-box">
@@ -22,6 +22,6 @@ export const DefinitionCard : React.FC<DefinitionCardProps> = ({definition}) => 
       </div>
       {meanings && meaningCards}
     </div>
-  )
-}
+  );
+};
 

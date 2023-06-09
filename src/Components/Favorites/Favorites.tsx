@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 // import { FavoritesProps } from "../App/App";
 import { DefinitionProps } from "../../utilites";
 import { DefinitionCard } from "../DefinitionCard/DefinitionCard";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 
 interface FavoritesCompProps {
   favorites: DefinitionProps[]
@@ -14,7 +15,8 @@ export const Favorites : React.FC<FavoritesCompProps> = ({favorites}) => {
 
   return (
     <section>
-      {favoriteCards}
+      {!favorites && <ErrorMessage message = "No Favorites yet!"/>}
+      {favorites && favoriteCards}
     </section>
   )
 }

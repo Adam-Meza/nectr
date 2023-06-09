@@ -5,7 +5,7 @@ interface BoardpieceProps {
   letter : String;
   id?: string;
   updateCurrentGuess : (letter : String) => void;
-}
+};
 
 export const Boardpiece : React.FC<BoardpieceProps> = ({letter, updateCurrentGuess, id}) => {
   return (

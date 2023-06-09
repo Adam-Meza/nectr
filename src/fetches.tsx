@@ -1,15 +1,22 @@
 export const fetchDefinition = async (word : String) => {
-  return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-    .then(response => response.json())
-    .catch(error => {
-      throw new Error(error)
-    });
+  try {
+    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+    if (!response.ok) {
+      throw new Error('Network response was not OK');
+    }
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
 };
-
 export const fetchLetters = async () => {
-  return fetch('https://freebee.fun/cgi-bin/today')
-    .then(response => response.json())
-    .catch(error => {
-      throw new Error(error)
-    });
+  try {
+    const response = await fetch('https://freebee.fun/cgi-bin/today');
+    if (!response.ok) {
+      throw new Error('Network response was not OK');
+    }
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
 };

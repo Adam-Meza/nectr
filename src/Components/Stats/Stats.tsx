@@ -2,16 +2,19 @@ import React from "react";
 import { DefinitionProps } from "../../utilites";
 
 interface StatsProps {
-  total: Number;
-  correctAnswers: any[]
+  total: String[];
+  correctAnswers: DefinitionProps[];
 }
 
 export const Stats : React.FC<StatsProps> = ({total, correctAnswers}) => {
+  const totalWords  = total.length;
+  const numberOfCorrectAnswers = correctAnswers.length;
+
   return(
-    <section>
+    <section className="stats">
       <h2>Current Game</h2>
-      <p>Words guessed: {`${correctAnswers.length}`}</p>
-      <p> total words possible : {`${total}`}</p>
+      <p>Words Guessed: {`${numberOfCorrectAnswers}`}</p>
+      <p>Total Words Possible: {`${totalWords}`}</p>
     </section>
   )
 }

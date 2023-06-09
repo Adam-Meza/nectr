@@ -20,28 +20,48 @@ function App() {
         [answers, setAnswers] = useState<DefinitionProps[]>([]),
         [favorites, setFavorites] = useState<DefinitionProps[]>([]),
         [definition, setDefinition] = useState<DefinitionProps>(
-          { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""})
+          { meanings: [{partOfSpeech: '', definitions: [""]}], word: "", phonetic: ""});
 
+  // Fetch Calls
   useEffect(() => {
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      fetchLetters().then((json) => {
+        const {letters, words, center} = cleanGameData(json);
+        setCenter(center);
+        setLetters(letters);
+        setWords(words);
+      });
+    } catch(error : any) {
+      setError(error);
+    };
+  };
  
   const getDefinition = async (word: String) => {
     try {
       const json = await fetchDefinition(word);
-      if(json.title) {
+      if (json.title) {
         setAnswers((prevAnswers) => [...prevAnswers, { meanings: [{partOfSpeech: '', definitions: [""]}], word: word, phonetic: ""}])
-        throw (json)
+        throw (json);
+
       } else {
         const cleanedDefinition = cleanDefinitionData(json[0]);
-      
         setDefinition(cleanedDefinition);  
         setAnswers((prevAnswers) => [...prevAnswers, cleanedDefinition]);  
-  
       }
     } catch (error : any) {
-      setError(`${error.message} ${error.resolution}`);
+      setError(`${error.message}`);
     }
+  };
+
+  //Submission Functions
+  const handleSubmit = ()  : void => {
+    setError('');
+    checkGuess(currentGuess);
+    setGuess('');
   };
 
   const checkGuess = (guess : String) : void => {
@@ -54,38 +74,19 @@ function App() {
     } else if (guess.length < 4) {
       setError('Guesses must be at least 4 letters!');
     } else if (answers.find(answer => answer.word === guess) ){
-      setError('You already got that word!')
+      setError('You already got that word!');
     } else {
       setError('Please enter a valid word!');
     };
   };
 
-  const handleSubmit = ()  : void => {
-    setError('')
-    checkGuess(currentGuess);
-    setGuess('');
-  };
-
-  const fetchData = async () => {
-    try {
-      fetchLetters().then((json) => {
-        const {letters, words, center} = cleanGameData(json);
-        setCenter(center);
-        setLetters(letters);
-        setWords(words);
-      });
-    } catch(error : any) {
-      setError(error)
-    };
-  };
-
-  // Funcitons for gameplay buttons
+  // Funcitons for Gameplay Buttons
   const deleteLastLetter = () : void => {
     setGuess(currentGuess.slice(0, -1));
   };
 
   const randomizeLetters = () : void => {
-    const shuffledLetters = letters.slice().sort(function() {
+    const shuffledLetters = letters.slice().sort(() => {
       return 0.5 - Math.random();
     });
     setLetters(shuffledLetters);
@@ -95,30 +96,33 @@ function App() {
     setGuess([currentGuess, letter].join(''));
   };
 
-  //functions for word cards
+  //Functions for Word Cards
   const unfavorite = (wordToUnfavorite : DefinitionProps) => {
-    const updatedFavorites = favorites.filter(word => word !== wordToUnfavorite)
-    setFavorites([...updatedFavorites])
-  }
+    const updatedFavorites = favorites.filter(word => word !== wordToUnfavorite);
+    setFavorites([...updatedFavorites]);
+  };
 
   const addFavorite = (newDefinition : DefinitionProps ) => {
     if (!favorites.includes(newDefinition)) {
       setFavorites([...favorites, newDefinition]);
-    }
+    };
   };
+
+  const checkFavorites = (word : String) => {
+    return favorites.find(fav => fav.word === word ) ? true : false
+  }
   
   return (
     <div className="App">
       <Header/>
       <Switch>
-        
-        <Route exact path ="/favorites" render={ () => (
+        <Route exact path ="/favorites" render={() => (
           <Favorites favorites ={favorites}/>
           )}
         />
-        <Route exact path = "/stats" render={ ()=> (
-          <Stats total={words.length} correctAnswers={answers}/>
-         )}
+        <Route exact path = "/stats" render={()=> (
+          <Stats total={words} correctAnswers={answers}/>
+          )}
         />
         <Route exact path ="/" 
           render = { () => (
@@ -131,16 +135,16 @@ function App() {
               updateCurrentGuess={updateCurrentGuess}
               deleteLastLetter = {deleteLastLetter}
               randomizeLetters = {randomizeLetters}
-
               />
               <aside>
-              <Scoreboard
-                answers = {answers}
-                addFavorite= {addFavorite}
-                unfavorite = {unfavorite}
-              />
+                <Scoreboard
+                  answers = {answers}
+                  addFavorite= {addFavorite}
+                  unfavorite = {unfavorite}
+                  checkFavorites = {checkFavorites}
+                />
                 { !error && <DefinitionCard definition = {definition}/> }
-                { error && <ErrorMessage message={error}/> }
+                { error && <ErrorMessage message= {error} /> }
               </aside>
             </section>
           )}
@@ -152,6 +156,6 @@ function App() {
     </Switch>
     </div>
   );
-};
+};   
 
 export default App;
