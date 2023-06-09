@@ -85,15 +85,15 @@ const App = () => {
     setGuess(currentGuess.slice(0, -1));
   };
 
+  const updateCurrentGuess = (letter : String)  : void => {
+    setGuess([currentGuess, letter].join(''));
+  };
+
   const randomizeLetters = () : void => {
     const shuffledLetters = letters.slice().sort(() => {
       return 0.5 - Math.random();
     });
     setLetters(shuffledLetters);
-  };
-
-  const updateCurrentGuess = (letter : String)  : void => {
-    setGuess([currentGuess, letter].join(''));
   };
 
   //Functions for Word Cards
