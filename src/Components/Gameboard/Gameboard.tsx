@@ -1,6 +1,7 @@
 import React from "react";
 import { Boardpiece } from "../Boardpiece/Boardpiece";
 import './/gameboard.css'
+const RandomButton = require( '../../assets/randomize-button.jpg')
 
 interface GameboardProps {
   center: String;
@@ -10,7 +11,6 @@ interface GameboardProps {
   handleSubmit: () => void;
   updateCurrentGuess : (letter : String) => void;
   randomizeLetters : () => void;
-
 };
 
 export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLastLetter, handleSubmit, currentGuess, center, letters, updateCurrentGuess}) => {
@@ -38,7 +38,7 @@ export const Gameboard : React.FC<GameboardProps> = ({randomizeLetters, deleteLa
       </section>
       <div className ='button-container'>
         <button className ="game-play-button" onClick={()=> deleteLastLetter()}>DELETE</button>
-        <button className ="game-play-button" onClick ={()=> randomizeLetters()}>RANDOM</button>
+        <button className ="game-play-button" onClick ={()=> randomizeLetters()}>RANDOMIZE</button>
         <button className ="game-play-button" onClick = {() => handleSubmit()}>ENTER</button>
       </div>
     </main>

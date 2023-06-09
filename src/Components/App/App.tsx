@@ -36,7 +36,6 @@ const App = () => {
         setWords(words);
       });
     } catch(error : any) {
-      // console.log(error)
       setError("Something went wrong");
     };
   };

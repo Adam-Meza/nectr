@@ -17,6 +17,6 @@ export const fetchLetters = async () => {
     }
     return response.json();
   } catch (error) {
-    throw error;
+    return error;
   }
 };

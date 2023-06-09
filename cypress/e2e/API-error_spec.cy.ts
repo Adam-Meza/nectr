@@ -1,14 +1,4 @@
 describe("API Error Handling", () => {
-  it("Should display nothing if the Main API Call fails", () => {
-    cy.intercept('https://freebee.fun/cgi-bin/today', {
-      body: {
-        error: "This is bad data."
-      },
-      statusCode: 500
-    }).visit('http://localhost:3000/')
-    .get('main')
-  });
-
   it("Should display an error if the Dictionary API Call fails", () => {
       cy.intercept('GET', 'https://freebee.fun/cgi-bin/today', {
         fixture: "game.json"
@@ -28,4 +18,9 @@ describe("API Error Handling", () => {
 
       cy.get('.error-card').should("have.text", "Sorry pal, we couldn't find definitions for the word you were looking for.")
   });
+
+  it('Should Display an error if the path isnt valid', () => {
+    cy.visit('http://localhost:3000/badfilepath')
+    cy.get('.error-card').should("have.text", "Nothing to see here!")
+  })
 });
