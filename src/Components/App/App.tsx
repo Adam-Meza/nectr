@@ -59,7 +59,7 @@ const App = () => {
 
   //Submission Functions
   const handleSubmit = ()  : void => {
-    setError('');
+    setError('');git push 
     checkGuess(currentGuess);
     setGuess('');
   };
