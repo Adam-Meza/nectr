@@ -9,7 +9,7 @@ import { Favorites } from '../Favorites/Favorites';
 import { Scoreboard } from '../Scoreboard/Scoreboard';
 import { DefinitionCard } from '../DefinitionCard/DefinitionCard';
 import { Stats } from '../Stats/Stats';
-import './app.css';
+import './App.css';
 
 const App = () => {
   const [error, setError] = useState<String>(''),
